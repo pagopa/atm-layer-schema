@@ -34,27 +34,27 @@ spec:
             - containerPort: {{ .Values.service.port }}
           imagePullPolicy: Always
           env:
-            - name: MODEL_DB_TYPE
+            - name: SCHEMA_DB_TYPE
               value: "{{ .Values.database.type }}"
-            - name: MODEL_DB_URL
+            - name: SCHEMA_DB_URL
               value: "{{ .Values.database.url }}"
-            - name: MODEL_DB_USERNAME
+            - name: SCHEMA_DB_USERNAME
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.database.credentialsSecretName }}
                   key: {{ .Values.database.credentialsSecretKeys.username }}
-            - name: MODEL_DB_PASSWORD
+            - name: SCHEMA_DB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.database.credentialsSecretName }}
                   key: {{ .Values.database.credentialsSecretKeys.password }}
-            - name: MODEL_OBJECT_STORE_REGION
+            - name: SCHEMA_OBJECT_STORE_REGION
               value: "{{ .Values.objectStore.region }}"
-            - name: MODEL_OBJECT_STORE_TYPE
+            - name: SCHEMA_OBJECT_STORE_TYPE
               value: "{{ .Values.objectStore.type }}"
-            - name: MODEL_OBJECT_STORE_BUCKET_NAME
+            - name: SCHEMA_OBJECT_STORE_BUCKET_NAME
               value: "{{ .Values.objectStore.bucket_name }}"
-            - name: MODEL_OBJECT_STORE_BPMN_TEMPLATE_PATH
+            - name: SCHEMA_OBJECT_STORE_BPMN_TEMPLATE_PATH
               value: "{{ .Values.objectStore.bpmn_template_path }}"
 
           volumeMounts:
