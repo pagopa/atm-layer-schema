@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.deployment.name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    App: {{ .Values.deployment.name }}
+  annotations:
+    {{- toYaml .Values.deployment.annotations | nindent 4 }}
+
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      App: {{ .Values.deployment.name }}
+  template:
+    metadata:
+      labels:
+        App: {{ .Values.deployment.name }}
+        force-recreate: {{ randAlphaNum 5 | quote }}
+    spec:
+      serviceAccountName: {{ include "chart-1.serviceAccountName" . }}
+      volumes:
+      - name: secrets-store-inline
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true 
+          volumeAttributes:
+            secretProviderClass: {{ .Values.secretProviderClass.name }}
+      containers:
+        - name: {{ .Values.deployment.name }}
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          ports:
+            - containerPort: {{ .Values.service.port }}
+          imagePullPolicy: Always
+          env:
+            - name: SCHEMA_DB_TYPE
+              value: "{{ .Values.database.type }}"
+            - name: SCHEMA_DB_URL
+              value: "{{ .Values.database.url }}"
+            - name: SCHEMA_DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.database.credentialsSecretName }}
+                  key: {{ .Values.database.credentialsSecretKeys.username }}
+            - name: SCHEMA_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.database.credentialsSecretName }}
+                  key: {{ .Values.database.credentialsSecretKeys.password }}
+            - name: SCHEMA_OBJECT_STORE_REGION
+              value: "{{ .Values.objectStore.region }}"
+            - name: SCHEMA_OBJECT_STORE_TYPE
+              value: "{{ .Values.objectStore.type }}"
+            - name: SCHEMA_OBJECT_STORE_BUCKET_NAME
+              value: "{{ .Values.objectStore.bucket_name }}"
+            - name: SCHEMA_OBJECT_STORE_BPMN_TEMPLATE_PATH
+              value: "{{ .Values.objectStore.bpmn_template_path }}"
+
+          volumeMounts:
+          - name: secrets-store-inline
+            mountPath: "/mnt/secrets-store/1"
+            readOnly: true
+
+  strategy:
+    type: Recreate
