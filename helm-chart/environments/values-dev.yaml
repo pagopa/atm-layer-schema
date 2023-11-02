@@ -21,8 +21,8 @@ database:
   url: jdbc:postgresql://pagopa-dev-atm-layer-rds.cluster-cyezwzpjc2tj.eu-south-1.rds.amazonaws.com:5431/pagopadb?currentSchema=atm_layer_model_schema
   credentialsSecretName: "pagopa-dev-atm-layer-schema-database"
   credentialsSecretKeys:
-    username: postgres
-    password: password
+    username: DB_USERNAME
+    password: DB_PASSWORD
 
 secretProviderClass:
   name: atm-layer-schema-secrets
