@@ -26,6 +26,7 @@ database:
 
 secretProviderClass:
   name: atm-layer-schema-secrets
+  env: uat
 
 serviceAccount:
   # Specifies whether a service account should be created
