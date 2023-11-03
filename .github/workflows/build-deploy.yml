@@ -52,10 +52,8 @@ jobs:
           REPOSITORY: ${{ vars.DOCKER_IMAGE_NAME}}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -f src/main/java/it/gov/pagopa/atmlayer/service/schema/docker/Dockerfile.native -t $REGISTRY/$REPOSITORY:$IMAGE_TAG . \
+          docker build -f src/main/java/it/gov/pagopa/atmlayer/service/schema/docker/Dockerfile.native -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
-#          --build-arg QUARKUS_PROFILE=prod \
-#          --build-arg APP_NAME=atm-layer-schema
 
       - name: Update Kubernetes Config
         run: |
