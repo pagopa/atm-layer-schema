@@ -18,18 +18,11 @@ fullnameOverride: ""
 
 database:
   type: postgresql
-  url: postgresql://pagopa-dev-atm-layer-rds.cluster-cyezwzpjc2tj.eu-south-1.rds.amazonaws.com:5431/pagopadb?search_path=atm_layer_schema
-  db_name: pagopadb
+  url: jdbc:postgresql://pagopa-dev-atm-layer-rds.cluster-cyezwzpjc2tj.eu-south-1.rds.amazonaws.com:5431/pagopadb?currentSchema=atm_layer_model_schema
   credentialsSecretName: "pagopa-dev-atm-layer-schema-database"
   credentialsSecretKeys:
-    username: USERNAME_DB
-    password: PASSWORD_DB
-
-objectStore:
-  region: eu-south-1
-  type: AWS_S3
-  bucket_name: pagopa-dev-atm-layer-s3-schema
-  bpmn_template_path: /BPMN/files/UUID/[uuid]/VERSION/[version]
+    username: DB_USERNAME
+    password: DB_PASSWORD
 
 secretProviderClass:
   name: atm-layer-schema-secrets

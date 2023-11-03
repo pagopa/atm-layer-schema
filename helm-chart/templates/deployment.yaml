@@ -48,14 +48,6 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.database.credentialsSecretName }}
                   key: {{ .Values.database.credentialsSecretKeys.password }}
-            - name: SCHEMA_OBJECT_STORE_REGION
-              value: "{{ .Values.objectStore.region }}"
-            - name: SCHEMA_OBJECT_STORE_TYPE
-              value: "{{ .Values.objectStore.type }}"
-            - name: SCHEMA_OBJECT_STORE_BUCKET_NAME
-              value: "{{ .Values.objectStore.bucket_name }}"
-            - name: SCHEMA_OBJECT_STORE_BPMN_TEMPLATE_PATH
-              value: "{{ .Values.objectStore.bpmn_template_path }}"
 
           volumeMounts:
           - name: secrets-store-inline
