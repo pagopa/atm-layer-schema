@@ -52,6 +52,14 @@ securityContext: {}
   # runAsUser: 1000
 
 deployment:
+  create: false
+  name: pagopa-uat-atm-layer-schema
+  annotations:
+    reloader.stakater.com/auto: "true"
+    secret.reloader.stakater.com/reload: pagopa-uat-atm-layer-schema-database
+
+job:
+  create: true
   name: pagopa-uat-atm-layer-schema
   annotations:
     reloader.stakater.com/auto: "true"
