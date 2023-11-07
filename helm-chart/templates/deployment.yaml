@@ -1,22 +1,90 @@
-apiVersion: apps/v1
-kind: Deployment
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: {{ .Values.deployment.name }}
+#   namespace: {{ .Values.namespace }}
+#   labels:
+#     App: {{ .Values.deployment.name }}
+#   annotations:
+#     {{- toYaml .Values.deployment.annotations | nindent 4 }}
+
+# spec:
+#   replicas: {{ .Values.replicaCount }}
+#   selector:
+#     matchLabels:
+#       App: {{ .Values.deployment.name }}
+#   template:
+#     metadata:
+#       labels:
+#         App: {{ .Values.deployment.name }}
+#         force-recreate: {{ randAlphaNum 5 | quote }}
+#     spec:
+#       serviceAccountName: {{ include "chart-1.serviceAccountName" . }}
+#       volumes:
+#       - name: secrets-store-inline
+#         csi:
+#           driver: secrets-store.csi.k8s.io
+#           readOnly: true 
+#           volumeAttributes:
+#             secretProviderClass: {{ .Values.secretProviderClass.name }}
+#       containers:
+#         - name: {{ .Values.deployment.name }}
+#           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+#           ports:
+#             - containerPort: {{ .Values.service.port }}
+#           imagePullPolicy: Always
+#           env:
+#             - name: SCHEMA_DB_TYPE
+#               value: "{{ .Values.database.type }}"
+#             - name: SCHEMA_DB_URL
+#               value: "{{ .Values.database.url }}"
+#             - name: SCHEMA_DB_USERNAME
+#               valueFrom:
+#                 secretKeyRef:
+#                   name: {{ .Values.database.credentialsSecretName }}
+#                   key: {{ .Values.database.credentialsSecretKeys.username }}
+#             - name: SCHEMA_DB_PASSWORD
+#               valueFrom:
+#                 secretKeyRef:
+#                   name: {{ .Values.database.credentialsSecretName }}
+#                   key: {{ .Values.database.credentialsSecretKeys.password }}
+
+#           volumeMounts:
+#           - name: secrets-store-inline
+#             mountPath: "/mnt/secrets-store"
+#             readOnly: true
+
+#   strategy:
+#     type: Recreate
+
+
+
+
+
+
+
+
+
+
+
+apiVersion: batch/v1
+kind: Job
 metadata:
-  name: {{ .Values.deployment.name }}
+  name: {{ .Values.job.name }}
   namespace: {{ .Values.namespace }}
   labels:
-    App: {{ .Values.deployment.name }}
+    App: {{ .Values.job.name }}
   annotations:
-    {{- toYaml .Values.deployment.annotations | nindent 4 }}
-
+    {{- toYaml .Values.job.annotations | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      App: {{ .Values.deployment.name }}
+      App: {{ .Values.job.name }}
   template:
     metadata:
       labels:
-        App: {{ .Values.deployment.name }}
+        App: {{ .Values.job.name }}
         force-recreate: {{ randAlphaNum 5 | quote }}
     spec:
       serviceAccountName: {{ include "chart-1.serviceAccountName" . }}
@@ -28,7 +96,7 @@ spec:
           volumeAttributes:
             secretProviderClass: {{ .Values.secretProviderClass.name }}
       containers:
-        - name: {{ .Values.deployment.name }}
+        - name: {{ .Values.job.name }}
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           ports:
             - containerPort: {{ .Values.service.port }}
@@ -48,11 +116,10 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.database.credentialsSecretName }}
                   key: {{ .Values.database.credentialsSecretKeys.password }}
-
           volumeMounts:
           - name: secrets-store-inline
             mountPath: "/mnt/secrets-store"
             readOnly: true
 
-  strategy:
-    type: Recreate
+      restartPolicy: Never
+  backoffLimit: 0

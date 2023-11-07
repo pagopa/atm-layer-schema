@@ -57,6 +57,12 @@ deployment:
     reloader.stakater.com/auto: "true"
     secret.reloader.stakater.com/reload: pagopa-dev-atm-layer-schema-database
 
+job:
+  name: pagopa-dev-atm-layer-schema
+  annotations:
+    reloader.stakater.com/auto: "true"
+    secret.reloader.stakater.com/reload: pagopa-dev-atm-layer-schema-database
+
 service:
   name: pagopa-dev-atm-layer-schema
   type: NodePort
