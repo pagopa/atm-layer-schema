@@ -1,3 +1,7 @@
 databaseChangeLog:
   - include:
       file: db/changes/20231102_initial-setup.sql
+  - include:
+      file: db/changes/202311111940_added_resources_tables.sql
+  - include:
+      file: db/changes/202311111950_alter_table_resource_file_model_to_add_foreign_keys.sql
