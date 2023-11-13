@@ -15,7 +15,7 @@ spec:
         App: {{ .Values.job.name }}
         force-recreate: {{ randAlphaNum 5 | quote }}
     spec:
-      serviceAccountName: {{ include "chart-1.serviceAccountName" . }}
+      serviceAccountName: {{ include "atm-layer-schema.serviceAccountName" . }}
       volumes:
       - name: secrets-store-inline
         csi:
