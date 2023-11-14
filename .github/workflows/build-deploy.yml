@@ -67,6 +67,7 @@ jobs:
           
       - name: Upgrade Helm Chart
         run: |
+          helm uninstall pagopa-dev-atm-layer-schema --namespace pagopa
           helm upgrade --install ${{ vars.DOCKER_IMAGE_NAME }} helm-chart/ \
           --namespace pagopa \
           -f helm-chart/environments/values-${{ inputs.env }}.yaml \
