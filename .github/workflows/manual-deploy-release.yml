@@ -60,6 +60,10 @@ jobs:
           chmod 700 get_helm.sh
           ./get_helm.sh
           
+      - name: Uninstall Helm Chart
+        run: |
+          helm uninstall ${{ vars.DOCKER_IMAGE_NAME }} --namespace pagopa
+
       - name: Upgrade Helm Chart
         run: |
           helm upgrade --install ${{ vars.DOCKER_IMAGE_NAME }} helm-chart/ \
