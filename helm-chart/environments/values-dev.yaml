@@ -25,6 +25,7 @@ database:
     password: DB_PASSWORD
 
 secretProviderClass:
+  enabled: true
   name: atm-layer-schema-secrets
   env: dev
 
