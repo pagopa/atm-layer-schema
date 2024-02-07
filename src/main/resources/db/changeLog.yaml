@@ -7,3 +7,5 @@ databaseChangeLog:
       file: db/changes/202311111950_alter_table_resource_file_model_to_add_foreign_keys.sql
   - include:
       file: db/changes/20240129_alter_table_resource_entity_to_add_description.sql
+  - include:
+      file: db/changes/20240207_create_table_user_profile.sql
