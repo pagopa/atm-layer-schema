@@ -22,12 +22,14 @@ spec:
     spec:
       serviceAccountName: {{ include "atm-layer-schema.serviceAccountName" . }}
       volumes:
+      {{- if .Values.secretProviderClass.enabled }}
       - name: secrets-store-inline
         csi:
           driver: secrets-store.csi.k8s.io
           readOnly: true 
           volumeAttributes:
             secretProviderClass: {{ .Values.secretProviderClass.name }}
+      {{- end }}
       containers:
         - name: {{ .Values.deployment.name }}
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
@@ -49,11 +51,11 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.database.credentialsSecretName }}
                   key: {{ .Values.database.credentialsSecretKeys.password }}
-
-          volumeMounts:
+          {{- if .Values.secretProviderClass.enabled }}
           - name: secrets-store-inline
             mountPath: "/mnt/secrets-store"
             readOnly: true
+          {{- end }}
 
   strategy:
     type: Recreate
