@@ -37,6 +37,8 @@ spec:
             - containerPort: {{ .Values.service.port }}
           imagePullPolicy: Always
           env:
+            - name: TZ
+              value: Europe/Rome
             - name: SCHEMA_DB_TYPE
               value: "{{ .Values.database.type }}"
             - name: SCHEMA_DB_URL
