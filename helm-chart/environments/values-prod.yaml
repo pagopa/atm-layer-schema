@@ -19,6 +19,7 @@ fullnameOverride: ""
 database:
   type: postgresql
   url: jdbc:postgresql://pagopa-prod-atm-layer-rds.cluster-cjww3kikqdtw.eu-south-1.rds.amazonaws.com:5432/pagopadb?currentSchema=atm_layer_model_schema
+  credentialsSecretEnabled: true
   credentialsSecretName: "pagopa-prod-atm-layer-schema-database"
   credentialsSecretKeys:
     username: DB_USERNAME

@@ -1,0 +1,2 @@
+ALTER table transaction_entity  ALTER COLUMN created_at TYPE timestamp  USING created_at AT TIME ZONE 'UTC';
+ALTER table transaction_entity  ALTER COLUMN last_updated_at TYPE timestamp  USING last_updated_at AT TIME ZONE 'UTC';

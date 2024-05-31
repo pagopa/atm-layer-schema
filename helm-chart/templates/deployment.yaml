@@ -37,10 +37,13 @@ spec:
             - containerPort: {{ .Values.service.port }}
           imagePullPolicy: Always
           env:
+            - name: TZ
+              value: Europe/Rome
             - name: SCHEMA_DB_TYPE
               value: "{{ .Values.database.type }}"
             - name: SCHEMA_DB_URL
               value: "{{ .Values.database.url }}"
+            {{- if .Values.database.credentialsSecretEnabled }}
             - name: SCHEMA_DB_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -51,6 +54,7 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.database.credentialsSecretName }}
                   key: {{ .Values.database.credentialsSecretKeys.password }}
+            {{- end }}
           {{- if .Values.secretProviderClass.enabled }}
           - name: secrets-store-inline
             mountPath: "/mnt/secrets-store"

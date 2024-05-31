@@ -11,3 +11,5 @@ databaseChangeLog:
       file: db/changes/20240207_create_table_user_profile.sql
   - include:
       file: db/changes/20240215_added_enabled_workflow_and_resource_entity.sql
+  - include:
+      file: db/changes/20240319_create_table_transaction_entity.sql
