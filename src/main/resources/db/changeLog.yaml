@@ -23,3 +23,5 @@ databaseChangeLog:
       file: db/changes/20240606_alter_table_user_drop_not_null.sql
   - include:
       file: db/changes/20240729_create_table_banks.sql
+  - include:
+      file: db/changes/20240826_added_profiles_banks_and_transactions.sql
