@@ -8,8 +8,20 @@ databaseChangeLog:
   - include:
       file: db/changes/20240129_alter_table_resource_entity_to_add_description.sql
   - include:
-      file: db/changes/20240207_create_table_user_profile.sql
-  - include:
       file: db/changes/20240215_added_enabled_workflow_and_resource_entity.sql
   - include:
       file: db/changes/20240319_create_table_transaction_entity.sql
+  - include:
+      file: db/changes/20240405_alter_table_transaction_entity.sql
+  - include:
+      file: db/changes/20240529_create_table_profile.sql
+  - include:
+      file: db/changes/20240529_create_table_users.sql
+  - include:
+      file: db/changes/20240529_create_table_user_profiles.sql
+  - include:
+      file: db/changes/20240606_alter_table_user_drop_not_null.sql
+  - include:
+      file: db/changes/20240729_create_table_banks.sql
+  - include:
+      file: db/changes/20240826_added_profiles_banks_and_transactions.sql
