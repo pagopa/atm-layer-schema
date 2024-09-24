@@ -42,6 +42,13 @@ jobs:
         run: |
           docker build -f src/main/java/it/gov/pagopa/atmlayer/service/schema/docker/Dockerfile.native -t $REGISTRY/$REPOSITORY:$DOCKER_IMAGE_TAG .
 
+      - name: Setup JDK
+        uses: graalvm/setup-graalvm@2911b2304bee2c2f59b9a67bf45f025a6b6de4b1 # v1
+        with:
+          java-version: '21'
+          distribution: 'graalvm'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Code Review
         run: |
           mvn sonar:sonar -Dsonar.token=${{ secrets.SONAR_TOKEN }} -Dsonar.projectKey=pagopa_atm-layer-schema \
