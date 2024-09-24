@@ -41,3 +41,9 @@ jobs:
           DOCKER_IMAGE_TAG: ${{ github.sha }}
         run: |
           docker build -f src/main/java/it/gov/pagopa/atmlayer/service/schema/docker/Dockerfile.native -t $REGISTRY/$REPOSITORY:$DOCKER_IMAGE_TAG .
+
+      - name: Code Review
+        run: |
+          mvn sonar:sonar -Dsonar.token=${{ secrets.SONAR_TOKEN }} -Dsonar.projectKey=pagopa_atm-layer-schema \
+          -Dsonar.organization=pagopa -Dsonar.java.binaries=src/main \
+          -Dsonar.exclusions=src/main/java/it/gov/pagopa/atmlayer/service/schema/docker/Dockerfile.native
