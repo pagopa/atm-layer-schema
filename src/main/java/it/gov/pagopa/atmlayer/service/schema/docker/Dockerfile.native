@@ -1,4 +1,4 @@
-FROM quay.io/quarkus/ubi-quarkus-graalvmce-builder-image:jdk-21 AS build
+FROM quay.io/quarkus/ubi-quarkus-graalvmce-builder-image:jdk-21@sha256:57df330f971a475941a035bbe6c0aef0bc75d5a9f1eba7ae6eaeac9741afd8f1 AS build
 COPY --chown=quarkus:quarkus mvnw /code/mvnw
 COPY --chown=quarkus:quarkus .mvn /code/.mvn
 COPY --chown=quarkus:quarkus pom.xml /code/
@@ -11,7 +11,7 @@ COPY src /code/src
 RUN ./mvnw package -Pnative -Dquarkus.application.name=atm-layer-schema -Dquarkus.profile=prod
 
 ## Stage 2 : create the docker final image
-FROM quay.io/quarkus/quarkus-micro-image:2.0
+FROM quay.io/quarkus/quarkus-micro-image:2.0@sha256:08263c65b8fc93055cd1ac62e6d63eeb612270f0e37a03bd1ab7a69b3e272a7b
 WORKDIR /work/
 COPY --from=build /code/target/*-runner /work/application
 
